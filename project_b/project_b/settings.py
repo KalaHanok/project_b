@@ -28,6 +28,11 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES':
+    ('rest_framework.authentication.TokenAuthentication',
+)}
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
+    'drfpasswordless',
     'app_b'
 ]
 
@@ -81,8 +88,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -123,3 +128,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+PASSWORDLESS_AUTH = {
+    'PASSWORDLESS_AUTH_TYPES': ['MOBILE'],
+}
+TWILIO_ACCOUNT_SID='ACffad74912e53c0af41afb0261d74d214'
+TWILIO_AUTH_TOKEN='380ab983218e544dcfb9fc15681a276a'
+PASSWORDLESS_MOBILE_NOREPLY_NUMBER='+18145645540'
