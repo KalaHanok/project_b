@@ -1,0 +1,33 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches
+*.sqlite3
+
+# Virtual Environment
+venv/
+env/
+
+# IDEs
+.idea/
+.vscode/
+
+# Django
+*.log
+*.pot
+*.pyc
+db.sqlite3
+media/
+
+# Django Rest Framework
+__init__.pyc
+settings.py
+celery.py
+asgi.py
+wsgi.py
+*settings.py
+
+# Ignore .env files
+.env
