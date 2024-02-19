@@ -9,12 +9,16 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
 from pathlib import Path
+import environ
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+env=environ.Env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -44,7 +48,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'drfpasswordless',
     'app_b'
 ]
 
@@ -106,13 +109,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL='app_b.MyUserModel'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -129,9 +133,17 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-PASSWORDLESS_AUTH = {
-    'PASSWORDLESS_AUTH_TYPES': ['MOBILE'],
+AUTHENTICATION_BACKENDS = [
+    'app_b.backends.CustomMobileOTPBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
 }
-TWILIO_ACCOUNT_SID='ACffad74912e53c0af41afb0261d74d214'
-TWILIO_AUTH_TOKEN='380ab983218e544dcfb9fc15681a276a'
-PASSWORDLESS_MOBILE_NOREPLY_NUMBER='+18145645540'
+
+ACCOUNT_SID=env('ACCOUNT_SID')
+AUTH_TOKEN=env('AUTH_TOKEN')
+FROM_MOBILE_NUMBER=env('FROM_MOBILE_NUMBER')
